@@ -1,3 +1,13 @@
+const icons = {
+  play: `<img src="/icons/play.svg" class="lr-icon" />`,
+  externalLink: `<img src="/icons/external-link.svg" class="lr-icon" />`
+};
+
+function extractDomainFromUrl(url) {
+  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+  return (matches && matches[1]) || "...";
+}
+
 new Vue({
   el: "#gamesApp",
   data: {
@@ -7,7 +17,15 @@ new Vue({
         <article class="lr-tile" v-for="game in games">
             <h1>{{ game.title }}</h1>
             <p>{{ game.description }}</p>
-            <button v-on:click="fetchGame(game)">Read</button>
+            <a v-if="game.url" :href="game.url" target="_blank" class="lr-tile-button">
+                <span class="lr-tileButton-link">
+                    {{ extractDomainFromUrl(game.url) }}
+                </span>
+                <span class="lr-tileButton-icon">${icons.externalLink}</span>
+            </a>
+            <a v-else href="#" v-on:click="fetchGame(game)" class="lr-tile-button">
+                <span class="lr-tileButton-icon">${icons.play}</span>
+            </a>
         </article>
       </div>`,
   methods: {
@@ -20,6 +38,9 @@ new Vue({
     },
     fetchGame(game) {
       console.log(game);
+    },
+    extractDomainFromUrl(url) {
+      return extractDomainFromUrl(url);
     }
   },
   mounted() {
@@ -36,7 +57,15 @@ new Vue({
           <article class="lr-tile" v-for="story in stories">
               <h1>{{ story.title }}</h1>
               <p>{{ story.description }}</p>
-              <button v-on:click="fetchStory(story)">Read</button>
+              <a v-if="story.url" :href="story.url" class="lr-tile-button">
+                <span class="lr-tileButton-link">
+                    {{ extractDomainFromUrl(story.url) }}
+                </span>
+                <span class="lr-tileButton-icon">${icons.externalLink}</span>
+              </a>
+              <a v-else href="#" v-on:click="fetchStory(story)" class="lr-tile-button">
+                <span class="lr-tileButton-icon">${icons.play}</span>
+              </a>
           </article>
         </div>`,
   methods: {
@@ -49,6 +78,9 @@ new Vue({
     },
     fetchStory(story) {
       console.log(story);
+    },
+    extractDomainFromUrl(url) {
+      return extractDomainFromUrl(url);
     }
   },
   mounted() {
