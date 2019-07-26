@@ -3,8 +3,8 @@ new Vue({
   data: {
     games: []
   },
-  template: `<div>
-        <article v-for="game in games">
+  template: `<div class="lr-tileContainer">
+        <article class="lr-tile" v-for="game in games">
             <h1>{{ game.title }}</h1>
             <p>{{ game.description }}</p>
             <button v-on:click="fetchGame(game)">Read</button>
@@ -32,8 +32,8 @@ new Vue({
   data: {
     stories: []
   },
-  template: `<div>
-          <article v-for="story in stories">
+  template: `<div class="lr-tileContainer">
+          <article class="lr-tile" v-for="story in stories">
               <h1>{{ story.title }}</h1>
               <p>{{ story.description }}</p>
               <button v-on:click="fetchStory(story)">Read</button>
