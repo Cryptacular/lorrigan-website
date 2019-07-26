@@ -1,6 +1,9 @@
-var express = require("express"),
+var path = require("path"),
+  express = require("express"),
   app = express(),
   port = process.env.PORT || 3000;
+
+global.appRoot = path.resolve(__dirname);
 
 app.engine("pug", require("pug").__express);
 app.set("view engine", "pug");

@@ -2,7 +2,7 @@ var express = require("express"),
   router = express.Router();
 
 router.get("/", function(req, res) {
-  res.sendStatus(200);
+  res.sendFile(`${global.appRoot}/assets/games.json`);
 });
 
 module.exports = router;

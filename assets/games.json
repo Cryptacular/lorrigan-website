@@ -1,0 +1,11 @@
+{
+  "test": {
+    "title": "Test Game",
+    "description": "The description of a test game"
+  },
+  "test-with-url": {
+    "title": "Test Game That Links",
+    "description": "The description of a test game that links somewhere else",
+    "url": "http://lorrigan.itch.io/end-of-the-ward"
+  }
+}

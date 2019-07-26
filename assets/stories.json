@@ -1,0 +1,11 @@
+{
+  "test": {
+    "title": "Test Story",
+    "description": "The description of a test story"
+  },
+  "test-with-url": {
+    "title": "Test Story That Links",
+    "description": "The description of a test story that links somewhere else",
+    "url": "http://lorrigan.itch.io"
+  }
+}
