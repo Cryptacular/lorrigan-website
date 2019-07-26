@@ -7,7 +7,7 @@ router.use("/api/stories", require("./api/stories"));
 router.use("/api/story", require("./api/story"));
 
 router.get("/", function(req, res) {
-  res.render("index");
+  res.render("index", { year: new Date().getFullYear() });
 });
 
 module.exports = router;
