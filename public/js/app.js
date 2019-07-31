@@ -8,6 +8,55 @@ function extractDomainFromUrl(url) {
   return (matches && matches[1]) || "...";
 }
 
+const overlayApp = new Vue({
+  el: "#overlayApp",
+  data: {
+    shouldShow: false,
+    title: "",
+    storyContent: null,
+    gameContent: null
+  },
+  template: `<div class="lr-overlay" v-if="shouldShow">
+      <div>
+        <h1>{{ title }}</h1>
+        <a href="#" v-on:click="close()">x</a>
+      </div>
+      <div v-if="gameContent">
+        <p>Game Content</p>
+      </div>
+      <div v-if="storyContent">
+        <p>Story Content</p>
+      </div>
+    </dv>`,
+  methods: {
+    playGame(game) {
+      this.shouldShow = true;
+      this.title = game.title;
+
+      fetch(`/api/game/${game.id}`)
+        .then(r => r.json())
+        .then(r => {
+          this.gameContent = r;
+        });
+    },
+    readStory(story) {
+      this.shouldShow = true;
+      this.title = story.title;
+
+      fetch(`/api/story/${story.id}`)
+        .then(r => r.json())
+        .then(r => {
+          this.storyContent = r.content;
+        });
+    },
+    close() {
+      this.shouldShow = false;
+      this.storyContent = null;
+      this.gameContent = null;
+    }
+  }
+});
+
 new Vue({
   el: "#gamesApp",
   data: {
@@ -23,27 +72,25 @@ new Vue({
                 </span>
                 <span class="lr-tileButton-icon">${icons.externalLink}</span>
             </a>
-            <a v-else href="#" v-on:click="fetchGame(game)" class="lr-tile-button">
+            <a v-else v-on:click="playGame(game)" class="lr-tile-button">
                 <span class="lr-tileButton-icon">${icons.play}</span>
             </a>
         </article>
       </div>`,
   methods: {
     fetchGames() {
-      fetch("/api/games").then(res => {
-        res.json().then(games => {
-          this.$set(this, "games", games);
-        });
-      });
+      fetch("/api/games")
+        .then(res => res.json())
+        .then(games => this.$set(this, "games", games));
     },
-    fetchGame(game) {
-      console.log(game);
+    playGame(game) {
+      overlayApp.playGame(game);
     },
     extractDomainFromUrl(url) {
       return extractDomainFromUrl(url);
     }
   },
-  mounted() {
+  created() {
     this.fetchGames();
   }
 });
@@ -63,7 +110,7 @@ new Vue({
                 </span>
                 <span class="lr-tileButton-icon">${icons.externalLink}</span>
               </a>
-              <a v-else href="#" v-on:click="fetchStory(story)" class="lr-tile-button">
+              <a v-else v-on:click="readStory(story)" class="lr-tile-button">
                 <span class="lr-tileButton-icon">${icons.play}</span>
               </a>
           </article>
@@ -76,14 +123,14 @@ new Vue({
         });
       });
     },
-    fetchStory(story) {
-      console.log(story);
+    readStory(story) {
+      overlayApp.readStory(story);
     },
     extractDomainFromUrl(url) {
       return extractDomainFromUrl(url);
     }
   },
-  mounted() {
+  created() {
     this.fetchStories();
   }
 });
