@@ -1,8 +1,3 @@
-const icons = {
-  play: `<img src="/icons/play.svg" class="lr-icon" />`,
-  externalLink: `<img src="/icons/external-link.svg" class="lr-icon" />`
-};
-
 function extractDomainFromUrl(url) {
   const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
   return (matches && matches[1]) || "...";
@@ -12,41 +7,53 @@ const overlayApp = new Vue({
   el: "#overlayApp",
   data: {
     shouldShow: false,
+    loading: true,
     title: "",
     storyContent: null,
     gameContent: null
   },
-  template: `<div class="lr-overlay" v-if="shouldShow">
-      <div>
-        <h1>{{ title }}</h1>
-        <a href="#" v-on:click="close()">x</a>
-      </div>
-      <div v-if="gameContent">
-        <p>Game Content</p>
-      </div>
-      <div v-if="storyContent">
-        <p>Story Content</p>
+  template: `<div class="lr-overlay" v-bind:class="{ show: shouldShow }">
+      <div class="lr-overlay-tile">
+        <div class="lr-overlay-header">
+          <h1 class="lr-overlay-title">{{ title }}</h1>
+          <a class="lr-overlay-close" v-on:click="close()">
+            <i class="lr-icon lr-icon--close" />
+          </a>
+        </div>
+        <div v-if="loading" class="lr-overlay-loading">
+          <i class="lr-icon lr-icon--loading" />
+        </div>
+        <div v-if="gameContent" class="lr-overlay-content">
+          <p>Game Content</p>
+        </div>
+        <div v-if="storyContent" class="lr-overlay-content">
+          <p>Story Content</p>
+        </div>
       </div>
     </dv>`,
   methods: {
     playGame(game) {
       this.shouldShow = true;
       this.title = game.title;
+      this.loading = true;
 
       fetch(`/api/game/${game.id}`)
         .then(r => r.json())
         .then(r => {
           this.gameContent = r;
+          this.loading = false;
         });
     },
     readStory(story) {
       this.shouldShow = true;
       this.title = story.title;
+      this.loading = true;
 
       fetch(`/api/story/${story.id}`)
         .then(r => r.json())
         .then(r => {
           this.storyContent = r.content;
+          this.loading = false;
         });
     },
     close() {
@@ -60,28 +67,41 @@ const overlayApp = new Vue({
 new Vue({
   el: "#gamesApp",
   data: {
-    games: []
+    games: [],
+    loading: true
   },
-  template: `<div class="lr-tileContainer">
-        <article class="lr-tile" v-for="game in games">
-            <h1>{{ game.title }}</h1>
-            <p>{{ game.description }}</p>
-            <a v-if="game.url" :href="game.url" target="_blank" class="lr-tile-button">
-                <span class="lr-tileButton-link">
-                    {{ extractDomainFromUrl(game.url) }}
-                </span>
-                <span class="lr-tileButton-icon">${icons.externalLink}</span>
-            </a>
-            <a v-else v-on:click="playGame(game)" class="lr-tile-button">
-                <span class="lr-tileButton-icon">${icons.play}</span>
-            </a>
-        </article>
+  template: `<div>
+        <div class="lr-tile-loading" v-if="loading">
+          <i class="lr-icon lr-icon--loading" />
+        </div>
+        <div class="lr-tileContainer" v-else>
+          <article class="lr-tile" v-for="game in games">
+              <h1>{{ game.title }}</h1>
+              <p>{{ game.description }}</p>
+              <a v-if="game.url" :href="game.url" target="_blank" class="lr-tile-button">
+                  <span class="lr-tileButton-link">
+                      {{ extractDomainFromUrl(game.url) }}
+                  </span>
+                  <span class="lr-tileButton-icon">
+                    <i class="lr-icon lr-icon--externalLink" />
+                  </span>
+              </a>
+              <a v-else v-on:click="playGame(game)" class="lr-tile-button">
+                  <span class="lr-tileButton-icon">
+                    <i class="lr-icon lr-icon--play" />
+                  </span>
+              </a>
+          </article>
+        </div>
       </div>`,
   methods: {
     fetchGames() {
       fetch("/api/games")
         .then(res => res.json())
-        .then(games => this.$set(this, "games", games));
+        .then(games => {
+          this.$set(this, "games", games);
+          this.loading = false;
+        });
     },
     playGame(game) {
       overlayApp.playGame(game);
@@ -98,28 +118,39 @@ new Vue({
 new Vue({
   el: "#storiesApp",
   data: {
-    stories: []
+    stories: [],
+    loading: true
   },
-  template: `<div class="lr-tileContainer">
-          <article class="lr-tile" v-for="story in stories">
-              <h1>{{ story.title }}</h1>
-              <p>{{ story.description }}</p>
-              <a v-if="story.url" :href="story.url" class="lr-tile-button">
-                <span class="lr-tileButton-link">
-                    {{ extractDomainFromUrl(story.url) }}
-                </span>
-                <span class="lr-tileButton-icon">${icons.externalLink}</span>
-              </a>
-              <a v-else v-on:click="readStory(story)" class="lr-tile-button">
-                <span class="lr-tileButton-icon">${icons.play}</span>
-              </a>
-          </article>
+  template: `<div>
+          <div class="lr-tile-loading" v-if="loading">
+            <i class="lr-icon lr-icon--loading" />
+          </div>
+          <div class="lr-tileContainer" v-else>
+            <article class="lr-tile" v-for="story in stories">
+                <h1>{{ story.title }}</h1>
+                <p>{{ story.description }}</p>
+                <a v-if="story.url" :href="story.url" class="lr-tile-button">
+                  <span class="lr-tileButton-link">
+                      {{ extractDomainFromUrl(story.url) }}
+                  </span>
+                  <span class="lr-tileButton-icon">
+                    <i class="lr-icon lr-icon--externalLink" />
+                  </span>
+                </a>
+                <a v-else v-on:click="readStory(story)" class="lr-tile-button">
+                  <span class="lr-tileButton-icon">
+                    <i class="lr-icon lr-icon--play" />
+                  </span>
+                </a>
+            </article>
+          </div>
         </div>`,
   methods: {
     fetchStories() {
       fetch("/api/stories").then(res => {
         res.json().then(stories => {
           this.$set(this, "stories", stories);
+          this.loading = false;
         });
       });
     },
