@@ -105,7 +105,9 @@ function startInk(storyContent, containerId) {
       // Create paragraph with anchor element
       var choiceParagraphElement = document.createElement("p");
       choiceParagraphElement.classList.add("choice");
-      choiceParagraphElement.innerHTML = `<a href='#'>${choice.text}</a>`;
+      choiceParagraphElement.innerHTML = `<a href='#' class='lr-button'>${
+        choice.text
+      }</a>`;
       storyContainer.appendChild(choiceParagraphElement);
 
       // Fade choice in after a short delay
