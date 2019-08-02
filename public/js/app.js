@@ -20,13 +20,13 @@ const overlayApp = new Vue({
             <i class="lr-icon lr-icon--close" />
           </a>
         </div>
-        <div v-if="loading" class="lr-overlay-loading">
+        <div v-show="loading" class="lr-overlay-loading">
           <i class="lr-icon lr-icon--loading" />
         </div>
-        <div v-if="gameContent" class="lr-overlay-content">
-          <p>Game Content</p>
+        <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
+          <div id="inkContainer" class="lr-inkContainer"></div>
         </div>
-        <div v-if="storyContent" class="lr-overlay-content">
+        <div v-show="storyContent" class="lr-overlay-content">
           <p>Story Content</p>
         </div>
       </div>
@@ -42,6 +42,7 @@ const overlayApp = new Vue({
         .then(r => {
           this.gameContent = r;
           this.loading = false;
+          startInk(this.gameContent, "inkContainer");
         });
     },
     readStory(story) {

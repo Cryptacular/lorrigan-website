@@ -203,10 +203,23 @@ a {
   flex: 1;
 }
 
+.lr-overlay-content {
+  display: flex;
+  overflow-y: auto;
+}
+
 .lr-overlay-loading {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.lr-overlay-gameContainer {
+  flex: 1;
+}
+
+.lr-inkContainer {
+  flex: 1;
 }
 
 .lr-icon {
