@@ -4,6 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "webpack",
+    "prestart": "npm run build",
     "start": "node server.js",
     "watch": "nodemon server.js"
   },
@@ -12,9 +14,13 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "pug": "^2.0.4"
+    "inkjs": "^1.10.2",
+    "pug": "^2.0.4",
+    "vue": "^2.6.10"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
   }
 }

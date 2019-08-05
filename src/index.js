@@ -1,7 +1,8 @@
-function extractDomainFromUrl(url) {
-  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-  return (matches && matches[1]) || "...";
-}
+import Vue from "vue";
+import * as ink from "inkjs";
+
+import { startInk } from "./vendor/ink/startInk";
+import { extractDomainFromUrl } from "./utils/url";
 
 const overlayApp = new Vue({
   el: "#overlayApp",
@@ -13,24 +14,25 @@ const overlayApp = new Vue({
     gameContent: null
   },
   template: `<div class="lr-overlay" v-bind:class="{ show: shouldShow }">
-      <div class="lr-overlay-tile">
-        <div class="lr-overlay-header">
-          <h1 class="lr-overlay-title">{{ title }}</h1>
-          <a class="lr-overlay-close" v-on:click="close()">
-            <i class="lr-icon lr-icon--close" />
-          </a>
+        <div class="lr-overlay-tile">
+          <div class="lr-overlay-header">
+            <h1 class="lr-overlay-title">{{ title }}</h1>
+            <a class="lr-overlay-close" v-on:click="close()">
+              <i class="lr-icon lr-icon--close" />
+            </a>
+          </div>
+          <div v-show="loading" class="lr-overlay-loading">
+            <i class="lr-icon lr-icon--loading" />
+          </div>
+          <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
+            <div id="inkContainer" class="lr-inkContainer"></div>
+          </div>
+          <div v-show="storyContent" class="lr-overlay-content">
+            <p>Story Content</p>
+          </div>
         </div>
-        <div v-show="loading" class="lr-overlay-loading">
-          <i class="lr-icon lr-icon--loading" />
-        </div>
-        <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
-          <div id="inkContainer" class="lr-inkContainer"></div>
-        </div>
-        <div v-show="storyContent" class="lr-overlay-content">
-          <p>Story Content</p>
-        </div>
-      </div>
-    </dv>`,
+      </dv>
+    </div>`,
   methods: {
     playGame(game) {
       this.shouldShow = true;
@@ -42,7 +44,7 @@ const overlayApp = new Vue({
         .then(r => {
           this.gameContent = r;
           this.loading = false;
-          startInk(this.gameContent, "inkContainer");
+          startInk(this.gameContent, "inkContainer", ink);
         });
     },
     readStory(story) {

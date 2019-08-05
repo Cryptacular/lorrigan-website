@@ -1,4 +1,4 @@
-function startInk(storyContent, containerId) {
+export function startInk(storyContent, containerId, inkjs) {
   // Create ink story from the content using inkjs
   var story = new inkjs.Story(storyContent);
 
