@@ -199,7 +199,6 @@ a {
 }
 
 .lr-overlay-content {
-  display: flex;
   overflow-y: auto;
 }
 

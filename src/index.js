@@ -1,8 +1,11 @@
 import Vue from "vue";
 import * as ink from "inkjs";
+import MarkdownIt from "markdown-it";
 
 import { startInk } from "./vendor/ink/startInk";
 import { extractDomainFromUrl } from "./utils/url";
+
+const md = new MarkdownIt();
 
 const overlayApp = new Vue({
   el: "#overlayApp",
@@ -27,9 +30,7 @@ const overlayApp = new Vue({
           <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
             <div id="inkContainer" class="lr-inkContainer"></div>
           </div>
-          <div v-show="storyContent" class="lr-overlay-content">
-            <p>Story Content</p>
-          </div>
+          <div v-if="storyContent" v-html="storyContent" class="lr-overlay-content"></div>
         </div>
       </dv>
     </div>`,
@@ -55,7 +56,7 @@ const overlayApp = new Vue({
       fetch(`/api/story/${story.id}`)
         .then(r => r.json())
         .then(r => {
-          this.storyContent = r.content;
+          this.storyContent = md.render(r.content);
           this.loading = false;
         });
     },
