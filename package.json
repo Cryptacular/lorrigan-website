@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "prestart": "webpack",
-    "start": "node server.js",
-    "watch": "nodemon server.js"
+    "build": "webpack --config webpack.prod.js",
+    "start": "concurrently \"webpack -w --config webpack.dev.js\" \"nodemon server.js\"",
+    "now-start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -19,8 +19,12 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "concurrently": "^4.1.1",
     "nodemon": "^1.19.1",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-merge": "^4.2.1"
   }
 }
