@@ -4,14 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "start": "concurrently \"webpack -w --config webpack.dev.js\" \"nodemon server.js\"",
-    "now-start": "node server.js"
+    "build": "npm run webpack-prod",
+    "start": "concurrently \"npm run webpack-dev\" \"nodemon server.js\"",
+    "now-start": "node server.js",
+    "webpack-dev": "cross-env NODE_ENV=development webpack -w --config webpack.dev.js",
+    "webpack-prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^2.6.9",
     "express": "^4.17.1",
     "inkjs": "^1.10.2",
     "markdown-it": "^9.0.1",
@@ -19,12 +22,20 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
     "concurrently": "^4.1.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.19.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.1"
-  }
+  },
+  "browserslist": "> 0.25%, not dead"
 }
