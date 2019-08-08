@@ -3,13 +3,17 @@ var fs = require("fs"),
   router = express.Router();
 
 router.get("/:id", function(req, res) {
-  var content = fs.readFileSync(
-    `${global.appRoot}/assets/stories/${req.params.id}.md`,
-    "utf8"
-  );
-  res.json({
-    content
-  });
+  try {
+    var content = fs.readFileSync(
+      `${global.appRoot}/assets/stories/${req.params.id}.md`,
+      "utf8"
+    );
+    res.json({
+      content
+    });
+  } catch (e) {
+    res.status(404).send();
+  }
 });
 
 module.exports = router;

@@ -11,6 +11,7 @@
     <Overlay
       :should-show="overlay.shouldShow"
       :loading="overlay.loading"
+      :error="overlay.error"
       :title="overlay.title"
       :story-content="overlay.storyContent"
       :game-content="overlay.gameContent"
@@ -36,6 +37,7 @@ export default {
       overlay: {
         shouldShow: false,
         loading: true,
+        error: null,
         title: "",
         storyContent: null,
         gameContent: null
@@ -50,7 +52,14 @@ export default {
       this.overlay.loading = true;
 
       fetch(`/api/game/${game.id}`)
-        .then(r => r.json())
+        .then(r => {
+          if (r.status !== 200) {
+            this.overlay.error = "Oops, game not found!";
+            this.overlay.loading = false;
+            return;
+          }
+          r.json();
+        })
         .then(r => {
           this.overlay.gameContent = r;
           this.overlay.loading = false;
@@ -63,7 +72,14 @@ export default {
       this.overlay.loading = true;
 
       fetch(`/api/story/${story.id}`)
-        .then(r => r.json())
+        .then(r => {
+          if (r.status !== 200) {
+            this.overlay.error = "Oops, story not found!";
+            this.overlay.loading = false;
+            return;
+          }
+          r.json();
+        })
         .then(r => {
           this.overlay.storyContent = md.render(r.content);
           this.overlay.loading = false;

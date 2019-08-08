@@ -10,6 +10,12 @@
       <div v-show="loading" class="lr-overlay-loading">
         <i class="lr-icon lr-icon--loading" />
       </div>
+      <div v-if="error" class="lr-overlay-error">
+        <div>
+          <i class="lr-icon lr-icon--close" />
+        </div>
+        <div>{{error}}</div>
+      </div>
       <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
         <div id="inkContainer" class="lr-inkContainer"></div>
       </div>
@@ -20,7 +26,14 @@
 
 <script>
 export default {
-  props: ["should-show", "loading", "title", "story-content", "game-content"],
+  props: [
+    "should-show",
+    "loading",
+    "error",
+    "title",
+    "story-content",
+    "game-content"
+  ],
   methods: {
     close() {
       this.$emit("overlay-closed");
@@ -29,3 +42,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.lr-overlay-error {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+
