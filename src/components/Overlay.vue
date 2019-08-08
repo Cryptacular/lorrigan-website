@@ -13,7 +13,7 @@
       <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
         <div id="inkContainer" class="lr-inkContainer"></div>
       </div>
-      <div v-if="storyContent" v-html="storyContent" class="lr-overlay-content"></div>
+      <div v-show="storyContent" v-html="storyContent" class="lr-overlay-content"></div>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
   methods: {
     close() {
       this.$emit("overlay-closed");
+      document.getElementById("inkContainer").innerText = "";
     }
   }
 };
