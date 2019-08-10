@@ -200,10 +200,19 @@ a {
 
 .lr-overlay-content {
   overflow-y: auto;
+  padding-right: 4px;
 }
 
 .lr-overlay-loading {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lr-overlay-error {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -279,6 +288,18 @@ a:focus .lr-icon {
 
 .lr-icon--itch {
   background: url("/icons/itch-dot-io.svg");
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
 }
 
 @keyframes loading-spinner {
