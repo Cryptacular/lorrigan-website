@@ -9,6 +9,7 @@
     </section>
 
     <Overlay
+      :id="overlay.id"
       :should-show="overlay.shouldShow"
       :loading="overlay.loading"
       :error="overlay.error"
@@ -35,6 +36,7 @@ export default {
   data: function() {
     return {
       overlay: {
+        id: "",
         shouldShow: false,
         loading: true,
         error: null,
@@ -61,6 +63,7 @@ export default {
           return r.json();
         })
         .then(r => {
+          this.overlay.id = game.id;
           this.overlay.gameContent = r;
           this.overlay.loading = false;
           startInk(this.overlay.gameContent, "inkContainer", ink);
@@ -81,6 +84,7 @@ export default {
           return r.json();
         })
         .then(r => {
+          this.overlay.id = story.id;
           this.overlay.storyContent = md.render(r.content);
           this.overlay.loading = false;
         });

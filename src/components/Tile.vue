@@ -3,7 +3,7 @@
     <h1>{{ item.title }}</h1>
     <p>{{ item.description }}</p>
     <div class="lr-tile-action">
-      <a v-if="item.url" :href="item.url" target="_blank" class="lr-tile-button">
+      <a v-if="item.url" :href="item.url.trim()" target="_blank" class="lr-tile-button">
         <span class="lr-tileButton-link">{{ extractDomainFromUrl(item.url) }}</span>
         <span class="lr-tileButton-icon">
           <i class="lr-icon lr-icon--externalLink" />
@@ -25,7 +25,7 @@ export default {
   props: ["item", "onClick"],
   methods: {
     extractDomainFromUrl(url) {
-      return extractDomainFromUrl(url);
+      return extractDomainFromUrl(url.trim());
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="lr-overlay" v-bind:class="{ show: shouldShow }">
-    <div class="lr-overlay-tile">
+    <div class="lr-overlay-tile" v-bind:class="itemSpecificClass">
       <div class="lr-overlay-header">
         <h1 class="lr-overlay-title">{{ title }}</h1>
         <a class="lr-overlay-close" v-on:click="close()">
@@ -26,7 +26,13 @@
 
 <script>
 export default {
+  computed: {
+    itemSpecificClass: function() {
+      return this.id ? `lr-overlay--${this.id}` : "";
+    }
+  },
   props: [
+    "id",
     "should-show",
     "loading",
     "error",
