@@ -22,15 +22,10 @@
 </template>
 
 <script>
-import * as ink from "inkjs";
-import MarkdownIt from "markdown-it";
-
 import Games from "./Games.vue";
 import Stories from "./Stories.vue";
 import Overlay from "./Overlay.vue";
 import { startInk } from "../vendor/ink/startInk";
-
-const md = new MarkdownIt();
 
 export default {
   data: function() {
@@ -49,9 +44,9 @@ export default {
   components: { Games, Stories, Overlay },
   methods: {
     playGame(game) {
-      this.overlay.shouldShow = true;
       this.overlay.title = game.title;
       this.overlay.loading = true;
+      this.overlay.shouldShow = true;
 
       fetch(`/api/game/${game.id}`)
         .then(r => {
@@ -63,16 +58,19 @@ export default {
           return r.json();
         })
         .then(r => {
-          this.overlay.id = game.id;
-          this.overlay.gameContent = r;
-          this.overlay.loading = false;
-          startInk(this.overlay.gameContent, "inkContainer", ink);
+          import(/* webpackChunkName: "inkjs" */ "inkjs").then(ink => {
+            this.overlay.id = game.id;
+            this.overlay.gameContent = r;
+            this.overlay.loading = false;
+
+            startInk(this.overlay.gameContent, "inkContainer", ink);
+          });
         });
     },
     readStory(story) {
-      this.overlay.shouldShow = true;
       this.overlay.title = story.title;
       this.overlay.loading = true;
+      this.overlay.shouldShow = true;
 
       fetch(`/api/story/${story.id}`)
         .then(r => {
@@ -84,9 +82,14 @@ export default {
           return r.json();
         })
         .then(r => {
-          this.overlay.id = story.id;
-          this.overlay.storyContent = md.render(r.content);
-          this.overlay.loading = false;
+          import(/* webpackChunkName: "markdown-it" */ "markdown-it").then(
+            ({ default: MarkdownIt }) => {
+              const md = new MarkdownIt();
+              this.overlay.id = story.id;
+              this.overlay.storyContent = md.render(r.content);
+              this.overlay.loading = false;
+            }
+          );
         });
     },
     closeOverlay: function() {
