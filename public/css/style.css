@@ -111,6 +111,11 @@ a {
 .lr-tile {
   animation: slide-up 0.8s ease-out;
   animation-iteration-count: 1;
+  transition: box-shadow 0.3s ease-out;
+}
+
+.lr-tile:hover {
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes slide-up {
