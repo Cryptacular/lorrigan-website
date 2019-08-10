@@ -58,7 +58,7 @@ export default {
             this.overlay.loading = false;
             return;
           }
-          r.json();
+          return r.json();
         })
         .then(r => {
           this.overlay.gameContent = r;
@@ -78,7 +78,7 @@ export default {
             this.overlay.loading = false;
             return;
           }
-          r.json();
+          return r.json();
         })
         .then(r => {
           this.overlay.storyContent = md.render(r.content);
