@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="games.length > 0 || loading">
     <h1>Games</h1>
     <div class="lr-tile-loading" v-if="loading">
       <i class="lr-icon lr-icon--loading" />
@@ -26,6 +26,9 @@ export default {
       fetch("/api/games")
         .then(res => res.json())
         .then(games => {
+          games = games.map((g, i, arr) => {
+            return { ...g, index: i, total: arr.length };
+          });
           this.$set(this, "games", games);
           this.loading = false;
         });

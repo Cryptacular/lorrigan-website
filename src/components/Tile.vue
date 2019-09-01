@@ -1,7 +1,7 @@
 <template>
-  <article class="lr-tile" v-bind:key="item.id">
+  <article class="lr-tile" v-bind:key="item.id" v-bind:class="isLastOddTile">
     <h1>{{ item.title }}</h1>
-    <p>{{ item.description }}</p>
+    <p v-for="descr in item.description.split('\n')" :key="descr">{{ descr }}</p>
     <div class="lr-tile-action">
       <a v-if="item.url" :href="item.url.trim()" target="_blank" class="lr-tile-button">
         <span class="lr-tileButton-link">{{ extractDomainFromUrl(item.url) }}</span>
@@ -23,6 +23,17 @@ import { extractDomainFromUrl } from "../utils/url";
 
 export default {
   props: ["item", "onClick"],
+  computed: {
+    isLastOddTile: function() {
+      if (
+        this.item.index === this.item.total - 1 &&
+        this.item.index % 2 === 0
+      ) {
+        return "lr-tile--lastOdd";
+      }
+      return "";
+    }
+  },
   methods: {
     extractDomainFromUrl(url) {
       return extractDomainFromUrl(url.trim());

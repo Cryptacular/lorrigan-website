@@ -13,21 +13,25 @@ describe("Games", () => {
     it("should have `id` for each entry", () => {
       for (let i = 0; i < games.length; i++) {
         const g = games[i];
-        assert.notEqual(g.id, undefined);
+        assert.notEqual(g.id, undefined, `ID missing for ${g.title}`);
       }
     });
 
     it("should have `title` for each entry", () => {
       for (let i = 0; i < games.length; i++) {
         const g = games[i];
-        assert.notEqual(g.title, undefined);
+        assert.notEqual(g.title, undefined, `Title missing for ${g.id}`);
       }
     });
 
     it("should have `description` for each entry", () => {
       for (let i = 0; i < games.length; i++) {
         const g = games[i];
-        assert.notEqual(g.description, undefined);
+        assert.notEqual(
+          g.description,
+          undefined,
+          `Description missing for ${g.id}`
+        );
       }
     });
 
@@ -42,7 +46,7 @@ describe("Games", () => {
           }
 
           const matches = url.match(/^https?\:\/\//);
-          assert.equal(matches.length, 1);
+          assert.equal(matches.length, 1, `Invalid URL for ${g.id}`);
         }
       });
     });
@@ -62,7 +66,7 @@ describe("Games", () => {
               path.resolve(__dirname, `../assets/games/${id}.json`),
               "utf8"
             );
-          });
+          }, `No asset exists for ${id}`);
         }
       });
 
@@ -82,7 +86,7 @@ describe("Games", () => {
 
           assert.doesNotThrow(() => {
             JSON.parse(asset);
-          });
+          }, `Invalid JSON for ${id}.json`);
         }
       });
     });

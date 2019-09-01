@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="stories.length > 0 || loading">
     <h1>Short Stories</h1>
     <div class="lr-tile-loading" v-if="loading">
       <i class="lr-icon lr-icon--loading" />
