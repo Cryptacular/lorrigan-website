@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "npm run test && npm run webpack-prod",
+    "build": "npm run webpack-prod",
     "start": "concurrently \"npm run test-watch\" \"npm run webpack-dev\" \"nodemon server.js\"",
     "now-start": "node server.js",
     "test": "mocha",
