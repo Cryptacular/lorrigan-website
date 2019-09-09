@@ -1,8 +1,8 @@
 [
   {
-    "id": "test",
-    "title": "Test Story",
-    "description": "The description of a test story"
+    "id": "cwc1",
+    "title": "The Show Must Go On",
+    "description": "The Clockwerk Cirque is in trouble. The crowd is getting restless and the main event isn't ready to go on..."
   },
   {
     "id": "test-with-url",
