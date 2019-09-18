@@ -25,6 +25,9 @@ export default {
     fetchStories() {
       fetch("/api/stories").then(res => {
         res.json().then(stories => {
+          stories = stories.map((s, i, arr) => {
+            return { ...s, index: i, total: arr.length };
+          });
           this.$set(this, "stories", stories);
           this.loading = false;
         });
