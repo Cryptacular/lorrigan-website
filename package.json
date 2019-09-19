@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npm run webpack-prod && node build.js",
+    "build": "npm run webpack-prod",
     "test": "mocha",
     "test-watch": "mocha -w",
     "webpack-dev": "cross-env NODE_ENV=development webpack -w --config webpack.dev.js --display errors-only",

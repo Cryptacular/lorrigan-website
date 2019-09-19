@@ -60,14 +60,10 @@ html(lang='en')
             | gtag('config', 'UA-145443350-1');
 
     body
-        section
+        header
             img.lr-logo(src="/public/images/logo.gif" alt="Lorrigan")
-            h1 Who
-            p I'm Corey, storyteller and narrative designer. Looking for a game to play? A story to read? You've come to the right place. Check out the links below!
         
-        div#app
-            div.lr-loadingContainer
-                i.lr-icon.lr-icon--loading
+        block content
 
         section
             h1 Contact
@@ -85,8 +81,4 @@ html(lang='en')
         footer
             | &copy; Corey Martel #{year}, all rights reserved
         
-        div#overlayApp
-
-        script(src="/public/js/index.bundle.js")
-        script(src="/public/js/vendors~inkjs.bundle.js")
-        script(src="/public/js/vendors~markdown-it.bundle.js")
+        block scripts

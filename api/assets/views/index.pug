@@ -1,0 +1,17 @@
+extends shared/layout.pug
+
+block content
+    section
+        h1 Who
+        p I'm Corey, storyteller and narrative designer. Looking for a game to play? A story to read? You've come to the right place. Check out the links below!
+    
+    div#app
+        div.lr-loadingContainer
+            i.lr-icon.lr-icon--loading
+
+    div#overlayApp
+
+block scripts
+    script(src="/public/js/index.bundle.js")
+    script(src="/public/js/vendors~inkjs.bundle.js")
+    script(src="/public/js/vendors~markdown-it.bundle.js")

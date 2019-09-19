@@ -1,6 +1,9 @@
 {
   "name": "lorrigan-website",
-  "routes": [{ "src": "/", "dest": "public/index.html" }],
+  "routes": [
+    { "src": "/", "dest": "api/page?id=index" },
+    { "src": "/(?<id>[^/]+)", "dest": "api/page?id=$id" }
+  ],
   "builds": [
     {
       "src": "api/**/*.js",
