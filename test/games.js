@@ -7,7 +7,7 @@ describe("Games", () => {
     let games;
 
     beforeEach(() => {
-      games = require("../assets/games.json");
+      games = require("../api/assets/games.json");
     });
 
     it("should have `id` for each entry", () => {
@@ -63,7 +63,7 @@ describe("Games", () => {
 
           assert.doesNotThrow(() => {
             fs.readFileSync(
-              path.resolve(__dirname, `../assets/games/${id}.json`),
+              path.resolve(__dirname, `../api/assets/games/${id}.json`),
               "utf8"
             );
           }, `No asset exists for ${id}`);
@@ -80,7 +80,7 @@ describe("Games", () => {
           }
 
           const asset = fs.readFileSync(
-            path.resolve(__dirname, `../assets/games/${id}.json`),
+            path.resolve(__dirname, `../api/assets/games/${id}.json`),
             "utf8"
           );
 
