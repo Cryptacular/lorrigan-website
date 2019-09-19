@@ -7,7 +7,7 @@
     "test": "mocha",
     "test-watch": "mocha -w",
     "webpack-dev": "cross-env NODE_ENV=development webpack -w --config webpack.dev.js --display errors-only",
-    "webpack-prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
+    "webpack-prod": "cross-env NODE_ENV=production webpack --config webpack.prod.js --output-path public/public/js"
   },
   "keywords": [],
   "author": "",
