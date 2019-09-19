@@ -294,28 +294,28 @@ a:focus .lr-icon {
 }
 
 .lr-icon--close {
-  background: url("/icons/close.svg");
+  background: url("/public/icons/close.svg");
 }
 
 .lr-icon--externalLink {
-  background: url("/icons/external-link.svg");
+  background: url("/public/icons/external-link.svg");
 }
 
 .lr-icon--loading {
-  background: url("/icons/loading.svg");
+  background: url("/public/icons/loading.svg");
   animation: loading-spinner 1.5s ease-in-out infinite;
 }
 
 .lr-icon--play {
-  background: url("/icons/play.svg");
+  background: url("/public/icons/play.svg");
 }
 
 .lr-icon--twitter {
-  background: url("/icons/twitter.svg");
+  background: url("/public/icons/twitter.svg");
 }
 
 .lr-icon--itch {
-  background: url("/icons/itch-dot-io.svg");
+  background: url("/public/icons/itch-dot-io.svg");
 }
 
 ::-webkit-scrollbar {

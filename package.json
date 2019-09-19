@@ -2,11 +2,8 @@
   "name": "lorrigan-website",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
-    "build": "npm run webpack-prod",
-    "start": "concurrently \"npm run test-watch\" \"npm run webpack-dev\" \"nodemon server.js\"",
-    "now-start": "node server.js",
+    "build": "npm run webpack-prod && node build.js",
     "test": "mocha",
     "test-watch": "mocha -w",
     "webpack-dev": "cross-env NODE_ENV=development webpack -w --config webpack.dev.js --display errors-only",

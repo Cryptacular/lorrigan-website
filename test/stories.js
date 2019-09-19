@@ -9,7 +9,7 @@ describe("Stories", () => {
   let stories;
 
   beforeEach(() => {
-    stories = require("../assets/stories.json");
+    stories = require("../api/assets/stories.json");
   });
 
   describe("JSON", () => {
@@ -63,7 +63,7 @@ describe("Stories", () => {
 
         assert.doesNotThrow(() => {
           fs.readFileSync(
-            path.resolve(__dirname, `../assets/stories/${id}.md`)
+            path.resolve(__dirname, `../api/assets/stories/${id}.md`)
           );
         });
       }
@@ -79,7 +79,7 @@ describe("Stories", () => {
         }
 
         const asset = fs.readFileSync(
-          path.resolve(__dirname, `../assets/stories/${id}.md`),
+          path.resolve(__dirname, `../api/assets/stories/${id}.md`),
           "utf8"
         );
 

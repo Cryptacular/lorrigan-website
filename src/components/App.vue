@@ -48,7 +48,7 @@ export default {
       this.overlay.loading = true;
       this.overlay.shouldShow = true;
 
-      fetch(`/api/game/${game.id}`)
+      fetch(`/api/game?id=${game.id}`)
         .then(r => {
           if (r.status !== 200) {
             this.overlay.error = "Oops, game not found!";
@@ -72,7 +72,7 @@ export default {
       this.overlay.loading = true;
       this.overlay.shouldShow = true;
 
-      fetch(`/api/story/${story.id}`)
+      fetch(`/api/story?id=${story.id}`)
         .then(r => {
           if (r.status !== 200) {
             this.overlay.error = "Oops, story not found!";
