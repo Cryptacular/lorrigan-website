@@ -26,6 +26,7 @@ import Games from "./Games.vue";
 import Stories from "./Stories.vue";
 import Overlay from "./Overlay.vue";
 import { startInk } from "../vendor/ink/startInk";
+import { trackTiming, trackEvent } from "../utils/analytics";
 
 export default {
   data: function() {
@@ -48,6 +49,8 @@ export default {
       this.overlay.loading = true;
       this.overlay.shouldShow = true;
 
+      const startedLoading = new Date();
+
       fetch(`/api/game?id=${game.id}`)
         .then(r => {
           if (r.status !== 200) {
@@ -64,13 +67,26 @@ export default {
             this.overlay.loading = false;
 
             startInk(this.overlay.gameContent, "inkContainer", ink);
+
+            const finishedLoading = new Date();
+
+            trackTiming(
+              "game",
+              "load",
+              finishedLoading - startedLoading,
+              game.title
+            );
           });
         });
+
+      trackEvent("game", "click", game.title);
     },
     readStory(story) {
       this.overlay.title = story.title;
       this.overlay.loading = true;
       this.overlay.shouldShow = true;
+
+      const startedLoading = new Date();
 
       fetch(`/api/story?id=${story.id}`)
         .then(r => {
@@ -88,9 +104,20 @@ export default {
               this.overlay.id = story.id;
               this.overlay.storyContent = md.render(r.content);
               this.overlay.loading = false;
+
+              const finishedLoading = new Date();
+
+              trackTiming(
+                "story",
+                "load",
+                finishedLoading - startedLoading,
+                story.title
+              );
             }
           );
         });
+
+      trackEvent("story", "click", story.title);
     },
     closeOverlay: function() {
       this.overlay.shouldShow = false;
