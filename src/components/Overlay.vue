@@ -14,12 +14,20 @@
         <div>
           <i class="lr-icon lr-icon--close" />
         </div>
-        <div>{{error}}</div>
+        <div>{{ error }}</div>
       </div>
-      <div v-show="gameContent" class="lr-overlay-content" id="inkOuterContainer">
+      <div
+        v-show="gameContent"
+        class="lr-overlay-content"
+        id="inkOuterContainer"
+      >
         <div id="inkContainer" class="lr-inkContainer"></div>
       </div>
-      <div v-show="storyContent" v-html="storyContent" class="lr-overlay-content"></div>
+      <div
+        v-show="storyContent"
+        v-html="storyContent"
+        class="lr-overlay-content"
+      ></div>
     </div>
   </div>
 </template>
@@ -38,7 +46,8 @@ export default {
     "error",
     "title",
     "story-content",
-    "game-content"
+    "game-content",
+    "opened-time"
   ],
   methods: {
     close() {

@@ -16,6 +16,7 @@
       :title="overlay.title"
       :story-content="overlay.storyContent"
       :game-content="overlay.gameContent"
+      :opened-time="overlay.openedTime"
       v-on:overlay-closed="closeOverlay"
     />
   </div>
@@ -38,7 +39,8 @@ export default {
         error: null,
         title: "",
         storyContent: null,
-        gameContent: null
+        gameContent: null,
+        openedTime: null
       }
     };
   },
@@ -50,6 +52,7 @@ export default {
       this.overlay.shouldShow = true;
 
       const startedLoading = new Date();
+      this.overlay.openedTime = startedLoading;
 
       fetch(`/api/game?id=${game.id}`)
         .then(r => {
@@ -106,6 +109,7 @@ export default {
               this.overlay.loading = false;
 
               const finishedLoading = new Date();
+              this.overlay.openedTime = finishedLoading;
 
               trackTiming(
                 "story",
@@ -120,9 +124,25 @@ export default {
       trackEvent("story", "click", story.title);
     },
     closeOverlay: function() {
+      const { openedTime, storyContent, title } = this.overlay;
+      const closedTime = new Date();
+
+      if (openedTime !== null) {
+        const readingTime = closedTime - openedTime;
+        const readingTimeInSeconds = Math.round(readingTime / 1000);
+
+        trackTiming(
+          storyContent === null ? "game" : "story",
+          "reading-time-seconds",
+          readingTimeInSeconds,
+          title
+        );
+      }
+
       this.overlay.shouldShow = false;
       this.overlay.storyContent = null;
       this.overlay.gameContent = null;
+      this.overlay.openedTime = null;
     }
   }
 };
