@@ -81,5 +81,20 @@ html(lang='en')
 
         footer
             | &copy; Corey Martel #{year}, all rights reserved
+
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js")
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-firestore.js")
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-storage.js")
+        script
+            | var firebaseConfig = {
+            |     apiKey: "AIzaSyBaT5h-lsMY8MnUshfnKyqn6Fe8fmYGx3A",
+            |     authDomain: "lorrigan.firebaseapp.com",
+            |     databaseURL: "https://lorrigan.firebaseio.com",
+            |     projectId: "lorrigan",
+            |     storageBucket: "lorrigan.appspot.com",
+            |     messagingSenderId: "70387583770",
+            |     appId: "1:70387583770:web:05b1a790369ecb60803aa3"
+            | };
+            | firebase.initializeApp(firebaseConfig);
         
         block scripts

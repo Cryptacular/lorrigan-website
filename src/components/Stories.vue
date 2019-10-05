@@ -12,6 +12,9 @@
 
 <script>
 import Tile from "./Tile.vue";
+import { DatabaseService } from "../services/DatabaseService.js"
+
+const db = new DatabaseService();
 
 export default {
   data: function() {
@@ -23,15 +26,11 @@ export default {
   components: { Tile },
   methods: {
     fetchStories() {
-      fetch("/api/stories").then(res => {
-        res.json().then(stories => {
-          stories = stories.map((s, i, arr) => {
-            return { ...s, index: i, total: arr.length };
-          });
+      db.get("stories")
+        .then(stories => {
           this.$set(this, "stories", stories);
           this.loading = false;
-        });
-      });
+        })
     },
     readStory(story) {
       this.$emit("read-story", story);

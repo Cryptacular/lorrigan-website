@@ -26,8 +26,11 @@
 import Games from "./Games.vue";
 import Stories from "./Stories.vue";
 import Overlay from "./Overlay.vue";
+import { StorageService } from "../services/StorageService"
 import { startInk } from "../vendor/ink/startInk";
 import { trackTiming, trackEvent } from "../utils/analytics";
+
+const storage = new StorageService();
 
 export default {
   data: function() {
@@ -54,15 +57,8 @@ export default {
       const startedLoading = new Date();
       this.overlay.openedTime = startedLoading;
 
-      fetch(`/api/game?id=${game.id}`)
-        .then(r => {
-          if (r.status !== 200) {
-            this.overlay.error = "Oops, game not found!";
-            this.overlay.loading = false;
-            return;
-          }
-          return r.json();
-        })
+      storage.get(`games/${game.id}.json`)
+        .then(r => r.json())
         .then(r => {
           import(/* webpackChunkName: "inkjs" */ "inkjs").then(ink => {
             this.overlay.id = game.id;
@@ -91,21 +87,14 @@ export default {
 
       const startedLoading = new Date();
 
-      fetch(`/api/story?id=${story.id}`)
-        .then(r => {
-          if (r.status !== 200) {
-            this.overlay.error = "Oops, story not found!";
-            this.overlay.loading = false;
-            return;
-          }
-          return r.json();
-        })
+      storage.get(`stories/${story.id}.md`)
+        .then(r => r.text())
         .then(r => {
           import(/* webpackChunkName: "markdown-it" */ "markdown-it").then(
             ({ default: MarkdownIt }) => {
               const md = new MarkdownIt();
               this.overlay.id = story.id;
-              this.overlay.storyContent = md.render(r.content);
+              this.overlay.storyContent = md.render(r);
               this.overlay.loading = false;
 
               const finishedLoading = new Date();
