@@ -72,14 +72,29 @@ html(lang='en')
             p Or catch me at one of these places below!       
             div.lr-contact-links
                 a(href="https://twitter.com/AStoryWithCorey" target="_blank").lr-contact-link
-                    span twitter.com
                     i.lr-icon.lr-icon--twitter
+                    span twitter.com
 
                 a(href="https://lorrigan.itch.io/" target="_blank").lr-contact-link
-                    span itch.io
                     i.lr-icon.lr-icon--itch
+                    span itch.io
 
         footer
-            | &copy; Corey Martel #{year}, all rights reserved
+            | &copy; Corey Leigh #{year}, all rights reserved
+
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js")
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-firestore.js")
+        script(src="https://www.gstatic.com/firebasejs/7.1.0/firebase-storage.js")
+        script
+            | var firebaseConfig = {
+            |     apiKey: "AIzaSyBaT5h-lsMY8MnUshfnKyqn6Fe8fmYGx3A",
+            |     authDomain: "lorrigan.firebaseapp.com",
+            |     databaseURL: "https://lorrigan.firebaseio.com",
+            |     projectId: "lorrigan",
+            |     storageBucket: "lorrigan.appspot.com",
+            |     messagingSenderId: "70387583770",
+            |     appId: "1:70387583770:web:05b1a790369ecb60803aa3"
+            | };
+            | firebase.initializeApp(firebaseConfig);
         
         block scripts

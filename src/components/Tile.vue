@@ -1,10 +1,19 @@
 <template>
   <article class="lr-tile" v-bind:key="item.id" v-bind:class="isLastOddTile">
     <h1>{{ item.title }}</h1>
-    <p v-for="descr in item.description.split('\n')" :key="descr">{{ descr }}</p>
+    <p v-for="descr in item.description.split('\\n')" :key="descr">
+      {{ descr }}
+    </p>
     <div class="lr-tile-action">
-      <a v-if="item.url" :href="item.url.trim()" target="_blank" class="lr-tile-button">
-        <span class="lr-tileButton-link">{{ extractDomainFromUrl(item.url) }}</span>
+      <a
+        v-if="item.url"
+        :href="item.url.trim()"
+        target="_blank"
+        class="lr-tile-button"
+      >
+        <span class="lr-tileButton-link">{{
+          extractDomainFromUrl(item.url)
+        }}</span>
         <span class="lr-tileButton-icon">
           <i class="lr-icon lr-icon--externalLink" />
         </span>

@@ -12,6 +12,9 @@
 
 <script>
 import Tile from "./Tile.vue";
+import { DatabaseService } from "../services/DatabaseService.js"
+
+const db = new DatabaseService();
 
 export default {
   data: function() {
@@ -23,12 +26,8 @@ export default {
   components: { Tile },
   methods: {
     fetchGames() {
-      fetch("/api/games")
-        .then(res => res.json())
+      db.get("games")
         .then(games => {
-          games = games.map((g, i, arr) => {
-            return { ...g, index: i, total: arr.length };
-          });
           this.$set(this, "games", games);
           this.loading = false;
         });
