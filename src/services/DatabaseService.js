@@ -16,9 +16,9 @@ export class DatabaseService {
             snapshots.forEach(s => {
               const data = s.data();
               const item = {
-                id: s.id,
-                title: data.title,
-                description: data.description,
+                id: s.id || 0,
+                title: data.title || "",
+                description: data.description || "",
                 url: data.url || null
               };
               items.push(item);
