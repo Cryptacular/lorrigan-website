@@ -1,6 +1,6 @@
-# Corey Martel's website
+# Corey Leigh's website
 
-What you're looking at is the code for Corey Martel's website: [lorrigan.nz](http://lorrigan.nz).
+What you're looking at is the code for Corey Leigh's website: [lorrigan.nz](https://lorrigan.nz).
 
 It is written in Node.js and uses the following technologies & tools:
 
@@ -14,4 +14,4 @@ It is written in Node.js and uses the following technologies & tools:
 
 Ink is a markup language for interactive storytelling, by [Inkle](https://www.inklestudios.com/ink/).
 
-&copy; 2019 Nick Mertens & Corey Martel
+&copy; 2020 Nick Mertens & Corey Martel
