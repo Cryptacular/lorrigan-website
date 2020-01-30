@@ -10,6 +10,10 @@
       <Stories v-on:read-story="readStory" />
     </section>
 
+    <section class="lr-section--wide">
+      <Articles v-on:read-article="readArticle" />
+    </section>
+
     <Overlay
       :id="overlay.id"
       :should-show="overlay.shouldShow"
@@ -28,6 +32,7 @@
 import SectionContent from "./SectionContent.vue";
 import Games from "./Games.vue";
 import Stories from "./Stories.vue";
+import Articles from "./Articles.vue";
 import Overlay from "./Overlay.vue";
 import { StorageService } from "../services/StorageService";
 import { startInk } from "../vendor/ink/startInk";
@@ -50,7 +55,7 @@ export default {
       }
     };
   },
-  components: { SectionContent, Games, Stories, Overlay },
+  components: { SectionContent, Games, Stories, Articles, Overlay },
   methods: {
     playGame(game) {
       this.overlay.title = game.title;
@@ -116,6 +121,39 @@ export default {
         });
 
       trackEvent("story", "click", story.title);
+    },
+    readArticle(article) {
+      this.overlay.title = article.title;
+      this.overlay.loading = true;
+      this.overlay.shouldShow = true;
+
+      const startedLoading = new Date();
+
+      storage
+        .get(`articles/${article.id}.md`)
+        .then(r => r.text())
+        .then(r => {
+          import(/* webpackChunkName: "markdown-it" */ "markdown-it").then(
+            ({ default: MarkdownIt }) => {
+              const md = new MarkdownIt();
+              this.overlay.id = article.id;
+              this.overlay.storyContent = md.render(r);
+              this.overlay.loading = false;
+
+              const finishedLoading = new Date();
+              this.overlay.openedTime = finishedLoading;
+
+              trackTiming(
+                "article",
+                "load",
+                finishedLoading - startedLoading,
+                article.title
+              );
+            }
+          );
+        });
+
+      trackEvent("article", "click", article.title);
     },
     closeOverlay: function() {
       const { openedTime, storyContent, title } = this.overlay;
