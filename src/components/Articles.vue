@@ -1,6 +1,6 @@
 <template>
   <div v-show="articles.length > 0 || loading">
-    <h1>Articles</h1>
+    <h1>Bonus</h1>
     <div class="lr-tile-loading" v-if="loading">
       <i class="lr-icon lr-icon--loading" />
     </div>
@@ -22,26 +22,26 @@ import { DatabaseService } from "../services/DatabaseService.js";
 const db = new DatabaseService();
 
 export default {
-  data: function() {
+  data: function () {
     return {
       articles: [],
-      loading: true
+      loading: true,
     };
   },
   components: { Tile },
   methods: {
     fetchArticles() {
-      db.get("articles").then(articles => {
+      db.get("articles").then((articles) => {
         this.$set(this, "articles", articles);
         this.loading = false;
       });
     },
     readArticle(article) {
       this.$emit("read-article", article);
-    }
+    },
   },
   created() {
     this.fetchArticles();
-  }
+  },
 };
 </script>
