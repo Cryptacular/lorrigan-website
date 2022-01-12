@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "inkjs": "^1.10.2",
-    "markdown-it": "^9.0.1",
+    "markdown-it": "^12.3.2",
     "pug": "^2.0.4",
     "vue": "^2.6.10"
   },
